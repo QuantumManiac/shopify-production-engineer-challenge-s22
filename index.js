@@ -12,19 +12,15 @@ app.use(express.json());
 // Init DB
 sequelize.sync();
 
-app.use((req, res, next) => {
-  console.log(req.method);
-  next(); // this will invoke next middleware function
-});
-
 // Get CRUD routes
 app.use('/api', require('./routes/create'));
-app.use('/api/:id', require('./routes/read'));
-app.use('/api/:id', require('./routes/update'));
-app.use('/api/:id', require('./routes/delete'));
+app.use('/api', require('./routes/read'));
+app.use('/api', require('./routes/update'));
+app.use('/api', require('./routes/remove'));
 
+// Serve HTML Page
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, './public/index.html'));
+  res.render(path.resolve(__dirname, './public/index.html'));
 });
 
 app.listen(3000);

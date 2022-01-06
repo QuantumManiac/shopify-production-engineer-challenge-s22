@@ -25,10 +25,9 @@ router.post('/', async (req, res) => {
     try {
       createdItem = await createItem(itemBody.name, itemBody?.desc, itemBody?.qty);
     } catch (err) {
-      res.status(400).json({ ok: false, message: `Error creating item in db${err?.message ? `: ${err.message}` : '.'}` });
+      return res.status(400).json({ ok: false, message: `Error creating item in db${err?.message ? `: ${err.message}` : '.'}` });
     }
-    console.log(createdItem);
-    res.send({ ok: true, item: createdItem });
+    res.status(201).json({ ok: true, item: createdItem });
   }
 });
 
