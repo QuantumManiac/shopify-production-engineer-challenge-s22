@@ -1,0 +1,31 @@
+{
+  "name": "shopify-production-engineer-challenge-s22",
+  "version": "1.0.0",
+  "description": "My Submission for the Shopify Production Engineer Intern  Challenge - Summer 2022",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/QuantumManiac/shopify-production-engineer-challenge-s22.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/QuantumManiac/shopify-production-engineer-challenge-s22/issues"
+  },
+  "homepage": "https://github.com/QuantumManiac/shopify-production-engineer-challenge-s22#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "sequelize": "^6.12.5",
+    "sqlite3": "^5.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.6.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4",
+    "nodemon": "^2.0.15"
+  }
+}
