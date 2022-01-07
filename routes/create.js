@@ -27,7 +27,7 @@ router.post('/items', async (req, res) => {
   } catch (err) {
     return res.status(400).json({ ok: false, message: `Error creating item in db${err?.message ? `: ${err.message}` : '.'}` });
   }
-  return res.status(201).json({ ok: true, item: createdItem });
+  return res.status(200).json({ ok: true, item: createdItem });
 });
 
 module.exports = router;

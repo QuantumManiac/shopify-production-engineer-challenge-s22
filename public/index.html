@@ -14,9 +14,9 @@
 </head>
 <body>
     <h1>Test Inventory, Please Ignore.</h1>
-    <button type="button" class="btn btn-success button-create"><i class="far fa-plus"></i> Create New Item</button>
-    <button type="button" class="btn btn-primary button-refresh"><i class="far fa-sync"></i> Refresh</button>
-    <button type="button" class="btn btn-secondary button-export"><i class="far fa-download"></i> Export CSV File</button>
+    <button type="button" class="btn btn-success" id="buttonCreate" data-bs-toggle="modal" data-bs-target="#modal"><i class="far fa-plus"></i> Create New Item</button>
+    <button type="button" class="btn btn-primary" id="buttonRefresh"><i class="far fa-sync"></i> Refresh</button>
+    <button type="button" class="btn btn-secondary" id="buttonExport"><i class="far fa-download"></i> Export CSV File</button>
     <table class=table>
         <thead>
             <tr>
@@ -31,27 +31,39 @@
         </tbody>
     </table>
 
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Launch demo modal
-</button>
-
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+        <h5 class="modal-title" id="modalTitle">Modal title</h5>
+        <button type="button" class="close" class="modalCloseButton" data-bs-dismiss="modal">
+          <span>&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <form id='modalForm'>
+          <div class="form-group">
+            <label for="modalInputID">ID</label>
+            <input type="text" class="form-control modalInput" id="modalInputID" placeholder="ID" readonly>
+          </div>
+          <div class="form-group">
+            <label for="modalInputName">Name</label>
+            <input type="text" class="form-control modalInput" id="modalInputName" placeholder="Item Name">
+          </div>
+          <div class="form-group">
+            <label for="modalInputDescription">Description</label>
+            <input type="text" class="form-control modalInput" id="modalInputDescription" placeholder="Enter email">
+          </div>
+          <div class="form-group">
+            <label for="modalInputQuantity">Quantity</label>
+            <input type="number" class="form-control modalInput" id="modalInputQuantity" placeholder="Quantity">
+          </div>
+        </form>
+        </div>
+      <div class="modal-footer" id="modalFooter">
+        <button type="button" class="btn btn-secondary modalCloseButton" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="buttonModalSubmit" id="modalBaseSubmit" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
