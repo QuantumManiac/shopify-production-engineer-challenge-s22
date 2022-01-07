@@ -18,10 +18,15 @@ const updateItem = async (id, properties) => {
   return updatedItem;
 };
 
-router.put('/:id', async (req, res) => {
+router.put('/items/:id', async (req, res) => {
   const { id } = req.params;
   const properties = req.body;
   let updatedItem;
+
+  if ('id' in properties) {
+    return res.status(400).json({ ok: false, message: 'Cannot change IDs of records' });
+  }
+
   try {
     updatedItem = await updateItem(id, properties);
   } catch (err) {

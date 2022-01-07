@@ -15,20 +15,19 @@ const createItem = async (itemName, itemDesc = 'No Description', itemQty = 0) =>
   return createdItem;
 };
 
-router.post('/', async (req, res) => {
+router.post('/items', async (req, res) => {
   // Verify that name field exists as it is mandatory
   if (!('name' in req.body)) {
-    res.status(400).json({ ok: false, message: 'missing mandatory field: name' });
-  } else {
-    const itemBody = req.body;
-    let createdItem;
-    try {
-      createdItem = await createItem(itemBody.name, itemBody?.desc, itemBody?.qty);
-    } catch (err) {
-      return res.status(400).json({ ok: false, message: `Error creating item in db${err?.message ? `: ${err.message}` : '.'}` });
-    }
-    res.status(201).json({ ok: true, item: createdItem });
+    return res.status(400).json({ ok: false, message: 'missing mandatory field: name' });
   }
+  const itemBody = req.body;
+  let createdItem;
+  try {
+    createdItem = await createItem(itemBody.name, itemBody?.desc, itemBody?.qty);
+  } catch (err) {
+    return res.status(400).json({ ok: false, message: `Error creating item in db${err?.message ? `: ${err.message}` : '.'}` });
+  }
+  return res.status(201).json({ ok: true, item: createdItem });
 });
 
 module.exports = router;

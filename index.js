@@ -8,19 +8,16 @@ const app = express();
 
 app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Init DB
 sequelize.sync();
 
-// Get CRUD routes
+// Get API
 app.use('/api', require('./routes/create'));
 app.use('/api', require('./routes/read'));
 app.use('/api', require('./routes/update'));
 app.use('/api', require('./routes/remove'));
-
-// Serve HTML Page
-app.get('*', (req, res) => {
-  res.render(path.resolve(__dirname, './public/index.html'));
-});
+app.use('/api', require('./routes/export'));
 
 app.listen(3000);

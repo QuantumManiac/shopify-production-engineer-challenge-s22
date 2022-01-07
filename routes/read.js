@@ -19,7 +19,7 @@ const findAllItems = async () => {
   return allItems;
 };
 
-router.get('/', async (req, res) => {
+router.get('/items', async (req, res) => {
   let foundItems;
   try {
     foundItems = await findAllItems();
@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
   return res.json({ ok: true, length: foundItems.length, items: foundItems });
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/items/:id', async (req, res) => {
   const { id } = req.params;
 
   let foundItem;
