@@ -156,13 +156,13 @@ const handleDelete = (event) => {
  * Handle closing the modal
  */
 const handleModalClose = () => {
+  $('#modal').modal('hide');
   // Restyle modal
   $('#modalEditSubmit, #modalCreateSubmit').attr('id', 'modalBaseSubmit');
   $('#modalEditSubmit, #modalCreateSubmit').attr('class', 'btn');
 
   $('#modalAlert').attr('hidden', true);
   $('#modalForm').trigger('reset');
-  $('#modal').modal('hide');
 };
 
 /**
@@ -194,22 +194,27 @@ const handleModalSubmit = (event) => {
     const original = ($.ajax({
       async: false,
       url: `api/items/${id}`,
-    })).responseJSON;
+    })).responseJSON.item;
 
     const values = {};
 
+    console.log(name, description, quantity);
+    console.log(original);
+
     // Validate form data
-    if (!name === original.name && name !== '') {
+    if (!(name === original.name) && name !== '') {
       values.name = name;
     }
 
-    if (!description === original.description && description !== '') {
+    if (!(description === original.description) && description !== '') {
       values.description = description;
     }
 
-    if (!quantity === original.quantity && quantity !== '') {
+    if (!(Number(quantity) === original.quantity) && quantity !== '') {
       values.quantity = quantity;
     }
+
+    console.log(values);
 
     result = updateItem(id, values);
   }

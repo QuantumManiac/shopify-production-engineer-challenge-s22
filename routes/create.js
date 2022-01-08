@@ -17,6 +17,7 @@ const createItem = async (itemName, itemDesc = 'No Description', itemQty = 0) =>
     description: itemDesc,
     quantity: itemQty,
   };
+
   // DB Call
   const createdItem = await Inventory.create(itemToCreate);
 
@@ -43,7 +44,7 @@ router.post('/items', async (req, res) => {
   const itemBody = req.body;
   let createdItem;
   try {
-    createdItem = await createItem(itemBody.name, itemBody?.desc, itemBody?.quantity);
+    createdItem = await createItem(itemBody.name, itemBody?.description, itemBody?.quantity);
   } catch (err) {
     return res.status(400).json({ ok: false, message: `Error creating item in db${err?.message ? `: ${err.message}` : '.'}` });
   }
