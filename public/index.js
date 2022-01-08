@@ -24,12 +24,26 @@ const populateTable = () => {
   });
 };
 
-const createItem = () => {
-
+const createItem = (values) => {
+  const result = $.ajax({
+    async: false,
+    url: 'api/items/',
+    type: 'POST',
+    contentType: 'application/json',
+    data: JSON.stringify(values),
+  });
+  return result.responseJSON;
 };
 
-const updateItem = () => {
-
+const updateItem = (id, values) => {
+  const result = $.ajax({
+    async: false,
+    url: `api/items/${id}`,
+    type: 'PUT',
+    contentType: 'application/json',
+    data: JSON.stringify(values),
+  });
+  return result.responseJSON;
 };
 
 const deleteItem = (id) => {
@@ -51,14 +65,68 @@ const handleCreate = () => {
   $('#modalTitle').text('Create New Item');
 };
 
+const handleExport = () => {
+  const { csv } = ($.ajax({
+    async: false,
+    url: 'api/export',
+  })).responseJSON;
+
+  const hiddenElement = document.createElement('a');
+  hiddenElement.href = `data:text/csv;charset=utf-8,${encodeURI(csv)}`;
+  hiddenElement.target = '_blank';
+  hiddenElement.download = 'inventory.csv';
+  hiddenElement.click();
+};
+
 const handleModalClose = () => {
   $('#modalEditSubmit, #modalCreateSubmit').attr('id', 'modalBaseSubmit');
   $('#modalEditSubmit, #modalCreateSubmit').attr('class', 'btn');
+  $('#modalAlert').attr('hidden', true);
   $('#modalForm').trigger('reset');
+  $('#modal').modal('hide');
 };
 
-const handleModalSubmit = (isCreate, event) => {
-  console.log(isCreate, event);
+const handleModalSubmit = (event) => {
+  const isCreate = event.target.id === 'modalCreateSubmit';
+
+  $('#modalAlert').attr('hidden', true);
+
+  const name = $('#modalInputName').val();
+  const description = $('#modalInputDescription').val();
+  let quantity = $('#modalInputQuantity').val();
+
+  let result;
+
+  if (isCreate) {
+    result = createItem({ name, description, quantity });
+  } else {
+    const id = $('#modalInputID').val();
+
+    const original = ($.ajax({
+      async: false,
+      url: `api/items/${id}`,
+    })).responseJSON;
+
+    if (quantity === '') {
+      quantity = 0;
+    }
+
+    const values = {
+      name: name === original.name ? original.name : name,
+      description: description === original.description ? original.description : description,
+      quantity: quantity === original.quantity ? original.quantity : quantity,
+    };
+
+    result = updateItem(id, values);
+  }
+
+  if (!result.ok) {
+    $('#modalAlert').attr('hidden', false);
+    $('#modalAlert').text(result.message);
+  } else {
+    handleModalClose();
+    handleRefresh();
+  }
 };
 
 const handleEdit = (event) => {
@@ -67,12 +135,24 @@ const handleEdit = (event) => {
   $('#modalInputID').attr('placeholder', 'ID');
   $('#modalEditSubmit').text('Save Changes');
   $('#modalTitle').text('Edit Item');
+
+  const { id } = event.currentTarget.parentElement.parentElement;
+
+  const values = ($.ajax({
+    async: false,
+    url: `api/items/${id}`,
+  })).responseJSON.item;
+
+  $('#modalInputID').val(values.id);
+  $('#modalInputName').val(values.name);
+  $('#modalInputDescription').val(values.description);
+  $('#modalInputQuantity').val(values.quantity);
 };
 
 const handleDelete = (event) => {
-  const { id } = event.target.parentElement.parentElement;
+  const { id } = event.currentTarget.parentElement.parentElement;
   deleteItem(id);
-  populateTable();
+  handleRefresh();
 };
 
 $(document).ready(() => {
@@ -84,6 +164,10 @@ $(document).ready(() => {
 
   $('#buttonRefresh').click(() => {
     handleRefresh();
+  });
+
+  $('#buttonExport').click(() => {
+    handleExport();
   });
 
   $('.modalCloseButton').click(() => {
@@ -99,6 +183,6 @@ $(document).ready(() => {
   });
 
   $('.buttonModalSubmit').click((event) => {
-    handleModalSubmit(true, event);
+    handleModalSubmit(event);
   });
 });

@@ -27,6 +27,18 @@ router.put('/items/:id', async (req, res) => {
     return res.status(400).json({ ok: false, message: 'Cannot change IDs of records' });
   }
 
+  if (properties.name === '') {
+    return res.status(400).json({ ok: false, message: 'Missing mandatory field: name' });
+  }
+
+  if (Number.isNaN(req.body.quantity)) {
+    return res.status(400).json({ ok: false, message: 'Quantity is not a number' });
+  }
+
+  if (properties.quantity < 0) {
+    return res.status(400).json({ ok: false, message: 'Cannot have negative quantity' });
+  }
+
   try {
     updatedItem = await updateItem(id, properties);
   } catch (err) {

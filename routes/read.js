@@ -11,12 +11,12 @@ const findItem = async (id) => {
     },
   });
 
-  return foundItem;
+  return foundItem.dataValues;
 };
 
 const findAllItems = async () => {
   const allItems = await Inventory.findAll();
-  return allItems;
+  return allItems.map((item) => (item.dataValues));
 };
 
 router.get('/items', async (req, res) => {
@@ -24,7 +24,7 @@ router.get('/items', async (req, res) => {
   try {
     foundItems = await findAllItems();
   } catch (err) {
-    return res.status(400).json({ ok: false, message: `Error retrieving item from db${err?.message ? `: ${err.message}` : '.'}` });
+    return res.status(400).json({ ok: false, message: `Error retrieving items from db${err?.message ? `: ${err.message}` : '.'}` });
   }
 
   return res.json({ ok: true, length: foundItems.length, items: foundItems });
