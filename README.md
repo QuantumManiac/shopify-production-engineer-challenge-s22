@@ -16,7 +16,7 @@ cd shopify-production-engineer-challenge-s22
 npm install 
 # Start the server
 npm start
-# Your browser should open up to the front-end. If it doesn't, navigate to https://localhost:5000
+# The server should now be running. Navigate to https://localhost:3000 to view the front-end
 ```
 
 The UI is fairly intuitive:

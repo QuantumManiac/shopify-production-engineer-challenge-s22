@@ -21,3 +21,5 @@ app.use('/api', require('./routes/remove'));
 app.use('/api', require('./routes/export'));
 
 app.listen(3000);
+/* eslint-disable-next-line */
+console.log('Listening on port 3000: http://localhost:3000');

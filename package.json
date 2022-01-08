@@ -4,7 +4,7 @@
   "description": "My Submission for the Shopify Production Engineer Intern  Challenge - Summer 2022",
   "main": "index.js",
   "scripts": {
-    "start": "start http://localhost:3000 && node index.js ",
+    "start": "node index.js ",
     "test": "mocha --recursive",
     "coverage": "nyc --all npm run test"
   },
