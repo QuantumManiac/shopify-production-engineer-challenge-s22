@@ -16,9 +16,12 @@ const findItem = async (id) => {
 
 const findAllItems = async () => {
   const allItems = await Inventory.findAll();
+  // Get only the data values (properties) of each record
   return allItems.map((item) => (item.dataValues));
 };
 
+// @route  GET api/items
+// @desc   Get list of all items
 router.get('/items', async (req, res) => {
   let foundItems;
   try {
@@ -30,6 +33,8 @@ router.get('/items', async (req, res) => {
   return res.json({ ok: true, length: foundItems.length, items: foundItems });
 });
 
+// @route  GET api/items/:id
+// @desc   Get properties of item with given ID
 router.get('/items/:id', async (req, res) => {
   const { id } = req.params;
 

@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Init DB
 sequelize.sync();
 
-// Get API
+// API Routes
 app.use('/api', require('./routes/create'));
 app.use('/api', require('./routes/read'));
 app.use('/api', require('./routes/update'));

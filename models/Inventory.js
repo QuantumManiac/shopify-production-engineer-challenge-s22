@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => sequelize.define('inventory', {
   id: {
-    type: DataTypes.UUID,
+    type: DataTypes.UUID, // Item ID (primary key) will be UUID
     defaultValue: DataTypes.UUIDV4,
     allowNull: false,
     primaryKey: true,

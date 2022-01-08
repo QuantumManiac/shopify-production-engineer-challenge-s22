@@ -4,7 +4,12 @@ const router = express.Router();
 
 const { Inventory } = require('../helpers/dbInit');
 
+/**
+ * Gets all records from DB
+ * @returns {Object[]} List of all records in table
+ */
 const findAllItems = async () => {
+  // DB Call
   const allItems = await Inventory.findAll();
   return allItems.map((item) => ({
     name: item.name,
